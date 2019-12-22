@@ -41,10 +41,17 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - name: downloads
+            mountPath: /downloads
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+      - name: downloads
+        persistentVolumeClaim:
+          claimName: {{ .Values.existingClaim }}
     {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
