@@ -1,8 +1,8 @@
-# cloud-torrent-tsocks
+# simple-torrent
 
 Deploy cloud-torrent on kubernetes through socks proxy
 
 # dockerhub
 
-sickyoon/cloud-torrent-tsocks
+sickyoon/simple-torrent
 

@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "cloud-torrent-tsocks.name" -}}
+{{- define "simple-torrent.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
@@ -11,7 +11,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "cloud-torrent-tsocks.fullname" -}}
+{{- define "simple-torrent.fullname" -}}
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
@@ -27,16 +27,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "cloud-torrent-tsocks.chart" -}}
+{{- define "simple-torrent.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
 Common labels
 */}}
-{{- define "cloud-torrent-tsocks.labels" -}}
-helm.sh/chart: {{ include "cloud-torrent-tsocks.chart" . }}
-{{ include "cloud-torrent-tsocks.selectorLabels" . }}
+{{- define "simple-torrent.labels" -}}
+helm.sh/chart: {{ include "simple-torrent.chart" . }}
+{{ include "simple-torrent.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -46,17 +46,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "cloud-torrent-tsocks.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "cloud-torrent-tsocks.name" . }}
+{{- define "simple-torrent.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "simple-torrent.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "cloud-torrent-tsocks.serviceAccountName" -}}
+{{- define "simple-torrent.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
-    {{ default (include "cloud-torrent-tsocks.fullname" .) .Values.serviceAccount.name }}
+    {{ default (include "simple-torrent.fullname" .) .Values.serviceAccount.name }}
 {{- else -}}
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}

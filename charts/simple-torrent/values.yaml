@@ -1,26 +1,15 @@
-# Default values for cloud-torrent-tsocks.
+# Default values for simple-torrent.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
-auth: test:test
-
-tsocksConfig: |-
-  server =
-  server_port =
-  server_type = 5
-  local = 192.168.0.0/255.255.0.0
-  local = 127.0.0.1/255.0.0.0
-  default_user =
-  default_pass =
 
 auth: hello:world
 
 replicaCount: 1
 
 image:
-  repository: sickyoon/cloud-torrent-tsocks
+  repository: sickyoon/simple-torrent
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 imagePullSecrets: []
 nameOverride: ""

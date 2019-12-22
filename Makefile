@@ -1,8 +1,8 @@
 build:
-	sudo docker build -t cloud-torrent-tsocks .
+	sudo docker build -t simple-torrent .
 
 run:
-	sudo docker run -it --rm cloud-torrent-tsocks
+	sudo docker run -it --rm simple-torrent
 
 deploy:
-	helm install cloud-torrent-tsocks charts/cloud-torrent-tsocks/.
+	helm install simple-torrent charts/simple-torrent/.

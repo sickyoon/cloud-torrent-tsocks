@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cloud-torrent-tsocks.fullname" . }}
+  name: {{ include "simple-torrent.fullname" . }}
   labels:
-    {{- include "cloud-torrent-tsocks.labels" . | nindent 4 }}
+    {{- include "simple-torrent.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "cloud-torrent-tsocks.selectorLabels" . | nindent 6 }}
+      {{- include "simple-torrent.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "cloud-torrent-tsocks.selectorLabels" . | nindent 8 }}
+        {{- include "simple-torrent.selectorLabels" . | nindent 8 }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-      serviceAccountName: {{ include "cloud-torrent-tsocks.serviceAccountName" . }}
+      serviceAccountName: {{ include "simple-torrent.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -41,16 +41,9 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          volumeMounts:
-          - name: tsocks
-            mountPath: /tsocks
           envFrom:
           - secretRef:
-              name: {{ include "cloud-torrent-tsocks.fullname" . }}-auth
-      volumes:
-        - name: tsocks
-          secret:
-            secretName: {{ include "cloud-torrent-tsocks.fullname" . }}
+              name: {{ include "simple-torrent.fullname" . }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
