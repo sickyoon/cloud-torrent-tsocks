@@ -6,3 +6,4 @@ run:
 
 deploy:
 	helm install simple-torrent charts/simple-torrent/.
+
