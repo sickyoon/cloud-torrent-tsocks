@@ -21,12 +21,22 @@ spec:
       serviceAccountName: {{ include "simple-torrent.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+      - name: copy
+        image: alpine:latest
+        command: ["cp", "/tmp/simple-torrent/config.json", "/etc/simple-torrent/config.json"]
+        volumeMounts:
+        - name: temp
+          mountPath: /tmp/simple-torrent
+        - name: config
+          mountPath: /etc/simple-torrent
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["cloud-torrent", "-c", "/etc/simple-torrent/config.json"]
           ports:
             - name: http
               containerPort: 3000
@@ -44,6 +54,8 @@ spec:
           volumeMounts:
           - name: downloads
             mountPath: /downloads
+          - name: config
+            mountPath: /etc/simple-torrent
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -52,6 +64,11 @@ spec:
       - name: downloads
         persistentVolumeClaim:
           claimName: {{ .Values.existingClaim }}
+      - name: temp
+        configMap:
+          name: simple-torrent-config
+      - name: config
+        emptyDir: {}
     {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}

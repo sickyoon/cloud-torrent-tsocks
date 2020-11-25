@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: simple-torrent-config
+data:
+  config.json: |
+    {
+      "AutoStart": true,
+      "EngineDebug": false,
+      "ObfsPreferred": true,
+      "ObfsRequirePreferred": true,
+      "DisableTrackers": true,
+      "DisableIPv6": false,
+      "DownloadDirectory": "/downloads",
+      "WatchDirectory": "/",
+      "EnableUpload": false,
+      "EnableSeeding": false,
+      "IncomingPort": 50358,
+      "SeedRatio": 0.0,
+      "UploadRate": "Unlimited",
+      "DownloadRate": "Unlimited",
+      "TrackerListURL": "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt",
+      "AlwaysAddTrackers": true,
+      "ProxyURL": "{{ .Values.proxyUrl }}"
+    }
+
